@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/u=3621933753,1508221562&fm=26&gp=0.jpg?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/u=3621933753,1508221562&fm=26&gp=0.jpg?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="1、代码编排 缩进。4个空格的缩进（编辑器都可以完成此功能），不使用Tab，更不能混合使用Tab和空格。 每行最大长度79，换行可以使用反斜杠，最好使用圆括号。换行点要在操作符的后边敲回车。 类和top-level（顶级窗口）函数定义之间空两行；类中的方法定义之间空一行；函数内逻辑无关段落之间空一行；其他地方尽量不要再空行。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python-PEP8编码规范">
+<meta property="og:url" content="http://Angle-dream.top/2019/01/25/Django中的pep8规范/index.html">
+<meta property="og:site_name" content="Follow Your Dreams">
+<meta property="og:description" content="1、代码编排 缩进。4个空格的缩进（编辑器都可以完成此功能），不使用Tab，更不能混合使用Tab和空格。 每行最大长度79，换行可以使用反斜杠，最好使用圆括号。换行点要在操作符的后边敲回车。 类和top-level（顶级窗口）函数定义之间空两行；类中的方法定义之间空一行；函数内逻辑无关段落之间空一行；其他地方尽量不要再空行。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-14T12:19:43.277Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python-PEP8编码规范">
+<meta name="twitter:description" content="1、代码编排 缩进。4个空格的缩进（编辑器都可以完成此功能），不使用Tab，更不能混合使用Tab和空格。 每行最大长度79，换行可以使用反斜杠，最好使用圆括号。换行点要在操作符的后边敲回车。 类和top-level（顶级窗口）函数定义之间空两行；类中的方法定义之间空一行；函数内逻辑无关段落之间空一行；其他地方尽量不要再空行。">
+  <link rel="canonical" href="http://Angle-dream.top/2019/01/25/Django中的pep8规范/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Python-PEP8编码规范 | Follow Your Dreams</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Follow Your Dreams</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">向着梦想前进</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-photos">
+      
+    
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-photos"></i>photos</a>
+
+  </li>
+      
+    
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">
+        
+          <i class="fa fa-search fa-fw"></i>
+        
+        搜索
+        </a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://Angle-dream.top/2019/01/25/Django中的pep8规范/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="秦梦奇">
+      <meta itemprop="description" content="贪婪和不劳而获是人性最大的劣根">
+      <meta itemprop="image" content="/images/u=3621933753,1508221562&fm=26&gp=0.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Follow Your Dreams">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            Python-PEP8编码规范
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-25 19:16:17" itemprop="dateCreated datePublished" datetime="2019-01-25T19:16:17+08:00">2019-01-25</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-14 20:19:43" itemprop="dateModified" datetime="2019-10-14T20:19:43+08:00">2019-10-14</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="1、代码编排"><a href="#1、代码编排" class="headerlink" title="1、代码编排"></a>1、代码编排</h4><ul>
+<li>缩进。4个空格的缩进（编辑器都可以完成此功能），不使用Tab，更不能混合使用Tab和空格。</li>
+<li>每行最大长度79，换行可以使用反斜杠，最好使用圆括号。换行点要在操作符的后边敲回车。</li>
+<li>类和top-level（顶级窗口）函数定义之间空两行；类中的方法定义之间空一行；函数内逻辑无关段落之间空一行；其他地方尽量不要再空行。</li>
+</ul><a id="more"></a>
+<h4 id="2、文档编排"><a href="#2、文档编排" class="headerlink" title="2、文档编排"></a>2、文档编排</h4><ul>
+<li>模块内容的顺序：模块说明和docstring—import—globals&amp;constants—其他定义。其中import部分，又按标准、三方和自己编写顺序依次排放，之间空一行。</li>
+<li>不要在一句import中多个库，比如import os, sys不推荐。</li>
+<li>如果采用from XX import XX引用库，可以省略‘module.’，都是可能出现命名冲突，这时就要采用import XX。</li>
+</ul>
+<h4 id="3、空格的使用"><a href="#3、空格的使用" class="headerlink" title="3、空格的使用"></a>3、空格的使用</h4><p>总体原则，避免不必要的空格。</p>
+<ul>
+<li>各种右括号前不要加空格。</li>
+<li>逗号、冒号、分号前不要加空格。</li>
+<li>函数的左括号前不要加空格。如Func(1)。</li>
+<li>序列的左括号前不要加空格。如list[2]。</li>
+<li>操作符左右各加一个空格，不要为了对齐增加空格。</li>
+<li>函数默认参数使用的赋值符左右省略空格。</li>
+<li>不要将多句语句写在同一行，尽管使用‘；’允许。</li>
+<li>if/for/while语句中，即使执行语句只有一句，也必须另起一行。</li>
+</ul>
+<h4 id="4、注释"><a href="#4、注释" class="headerlink" title="4、注释"></a>4、注释</h4><p>总体原则，错误的注释不如没有注释。所以当一段代码发生变化时，第一件事就是要修改注释！<br>注释必须使用英文，最好是完整的句子，首字母大写，句后要有结束符，结束符后跟两个空格，开始下一句。如果是短语，可以省略结束符。</p>
+<ul>
+<li>块注释，在一段代码前增加的注释。在‘#’后加一空格。段落之间以只有‘#’的行间隔。比如：</li>
+</ul>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># Description : Module config.</span></span><br><span class="line"><span class="meta"># </span></span><br><span class="line"><span class="meta"># Input : None</span></span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta"># Output : None</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>行注释，在一句代码后加注释。比如：x = x + 1  # Increment x<br>但是这种方式尽量少使用。</li>
+<li>避免无谓的注释。</li>
+</ul>
+<h4 id="5、文档注释"><a href="#5、文档注释" class="headerlink" title="5、文档注释"></a>5、文档注释</h4><ul>
+<li>为所有的共有模块、函数、类、方法写docstrings；非共有的没有必要，但是可以写注释（在def的下一行）。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">在def的下一行，填写文档注释，多人开发，需要添加以下项</span></span><br><span class="line"><span class="string">@ author:  开发人员名字</span></span><br><span class="line"><span class="string">@ date: 开发日期</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="6、命名规范"><a href="#6、命名规范" class="headerlink" title="6、命名规范"></a>6、命名规范</h4><p>总体原则，新编代码必须按下面命名风格进行，现有库的编码尽量保持风格。</p>
+<ul>
+<li>尽量单独使用小写字母‘l’，大写字母‘O’等容易混淆的字母。</li>
+<li>模块命名尽量短小，使用全部小写的方式，可以使用下划线。</li>
+<li>包命名尽量短小，使用全部小写的方式，不可以使用下划线。</li>
+<li>类的命名使用CapWords的方式，模块内部使用的类采用<em>CapWords的方式。</em></li>
+<li>_异常命名使用CapWords+Error后缀的方式。</li>
+<li>全局变量尽量只在模块内有效，类似C语言中的static。实现方法有两种，一是<strong>all</strong>机制;二是前缀一个下划线。</li>
+<li>函数命名使用全部小写的方式，可以使用下划线。</li>
+<li>常量命名使用全部大写的方式，可以使用下划线。</li>
+<li>类的属性（方法和变量）命名使用全部小写的方式，可以使用下划线。</li>
+<li>类的属性若与关键字名字冲突，后缀一下划线，尽量不要使用缩略等其他方式。</li>
+<li>为避免与子类属性命名冲突，在类的一些属性前，前缀两条下划线。比如：类Foo中声明<strong>a,访问时，只能通过Foo._Foo</strong>a，避免歧义。如果子类也叫Foo，那就无能为力了。</li>
+<li>类的方法第一个参数必须是self，而静态方法第一个参数必须是cls。</li>
+</ul>
+<h4 id="7、编码建议"><a href="#7、编码建议" class="headerlink" title="7、编码建议"></a>7、编码建议</h4><ul>
+<li>编码中考虑到其他python实现的效率等问题，比如运算符‘+’在CPython（Python）中效率很高，都是Jython中却非常低，所以应该采用.join()的方式。</li>
+<li>尽可能使用‘is’‘is not’取代‘==’，比如if x is not None 要优于if x。</li>
+<li>使用基于类的异常，每个模块或包都有自己的异常类，此异常类继承自Exception。</li>
+<li>异常中不要使用裸露的except，except后跟具体的exceptions。</li>
+<li>异常中try的代码尽可能少。比如：</li>
+</ul>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line"><span class="keyword">value</span> =<span class="built_in"> collection</span><span class="built_in">[key</span>]</span><br><span class="line"><span class="keyword">except</span> KeyError:</span><br><span class="line"><span class="keyword">return</span> key_not_found<span class="built_in">(key</span>)</span><br><span class="line">else:</span><br><span class="line"><span class="keyword">return</span> handle_value(<span class="keyword">value</span>)</span><br></pre></td></tr></table></figure>
+
+<p>要优于</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line"># Too broad!</span><br><span class="line"><span class="keyword">return</span> handle_value(collection[key])</span><br><span class="line">except KeyError:</span><br><span class="line"># Will also <span class="keyword">catch</span> KeyError raised <span class="keyword">by</span> handle_value()</span><br><span class="line"><span class="keyword">return</span> key_not_found(key)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>使用startswith() and endswith()代替切片进行序列前缀或后缀的检查。比如</p>
+<p>Yes: if foo.startswith(‘bar’):优于<br>No: if foo[:3] == ‘bar’:</p>
+</li>
+<li><p>使用isinstance()比较对象的类型。比如<br>Yes: if isinstance(obj, int): 优于<br>No: if type(obj) is type(1):</p>
+</li>
+<li><p>判断序列空或不空，有如下规则<br>Yes: if not seq:<br>if seq:<br>优于<br>No: if len(seq)<br>if not len(seq)</p>
+</li>
+<li><p>字符串不要以空格收尾。</p>
+</li>
+<li><p>二进制数据判断使用 if boolvalue的方式。</p>
+</li>
+</ul>
+
+      <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+      </div>
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>秦梦奇
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://Angle-dream.top/2019/01/25/Django中的pep8规范/" title="Python-PEP8编码规范">http://Angle-dream.top/2019/01/25/Django中的pep8规范/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/01/25/django自定义中间件/" rel="next" title="Django 自定义中间件">
+                  <i class="fa fa-chevron-left"></i> Django 自定义中间件
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/03/25/初识爬虫/" rel="prev" title="爬虫简述">
+                  爬虫简述 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、代码编排"><span class="nav-text">1、代码编排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、文档编排"><span class="nav-text">2、文档编排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、空格的使用"><span class="nav-text">3、空格的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、注释"><span class="nav-text">4、注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、文档注释"><span class="nav-text">5、文档注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、命名规范"><span class="nav-text">6、命名规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7、编码建议"><span class="nav-text">7、编码建议</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/u=3621933753,1508221562&fm=26&gp=0.jpg"
+      alt="秦梦奇">
+  <p class="site-author-name" itemprop="name">秦梦奇</p>
+  <div class="site-description" itemprop="description">贪婪和不劳而获是人性最大的劣根</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Angle-Dream" title="GitHub &rarr; https://github.com/Angle-Dream" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.1"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

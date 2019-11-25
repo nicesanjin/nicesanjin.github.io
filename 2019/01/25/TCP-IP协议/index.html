@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/u=3621933753,1508221562&fm=26&gp=0.jpg?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/u=3621933753,1508221562&fm=26&gp=0.jpg?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="TCP/IP五层协议 应用层  HTTP/HTTPS 、FTP、SSH  12345678910# HTTP(Hyper Text Transfer Protocol,超文本传输协议) --&amp;gt; 明文传输，端口80	HTTP（超文本传输协议）是一种用于分布式、 协作式和超媒体信息系 统的应用层协议。 简单来说就是一种发布和接收 HTML 页面的方法，被用于在 Web 浏览器和网站服务器之 间传">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP&#x2F;IP五层、OSI七层协议">
+<meta property="og:url" content="http://Angle-dream.top/2019/01/25/TCP-IP协议/index.html">
+<meta property="og:site_name" content="Follow Your Dreams">
+<meta property="og:description" content="TCP/IP五层协议 应用层  HTTP/HTTPS 、FTP、SSH  12345678910# HTTP(Hyper Text Transfer Protocol,超文本传输协议) --&amp;gt; 明文传输，端口80	HTTP（超文本传输协议）是一种用于分布式、 协作式和超媒体信息系 统的应用层协议。 简单来说就是一种发布和接收 HTML 页面的方法，被用于在 Web 浏览器和网站服务器之 间传">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-23T00:42:08.295Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP&#x2F;IP五层、OSI七层协议">
+<meta name="twitter:description" content="TCP/IP五层协议 应用层  HTTP/HTTPS 、FTP、SSH  12345678910# HTTP(Hyper Text Transfer Protocol,超文本传输协议) --&amp;gt; 明文传输，端口80	HTTP（超文本传输协议）是一种用于分布式、 协作式和超媒体信息系 统的应用层协议。 简单来说就是一种发布和接收 HTML 页面的方法，被用于在 Web 浏览器和网站服务器之 间传">
+  <link rel="canonical" href="http://Angle-dream.top/2019/01/25/TCP-IP协议/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>TCP/IP五层、OSI七层协议 | Follow Your Dreams</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Follow Your Dreams</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">向着梦想前进</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-photos">
+      
+    
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-photos"></i>photos</a>
+
+  </li>
+      
+    
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">
+        
+          <i class="fa fa-search fa-fw"></i>
+        
+        搜索
+        </a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://Angle-dream.top/2019/01/25/TCP-IP协议/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="秦梦奇">
+      <meta itemprop="description" content="贪婪和不劳而获是人性最大的劣根">
+      <meta itemprop="image" content="/images/u=3621933753,1508221562&fm=26&gp=0.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Follow Your Dreams">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            TCP/IP五层、OSI七层协议
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-25 19:16:17" itemprop="dateCreated datePublished" datetime="2019-01-25T19:16:17+08:00">2019-01-25</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-23 08:42:08" itemprop="dateModified" datetime="2019-10-23T08:42:08+08:00">2019-10-23</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TCP-IP协议/" itemprop="url" rel="index">
+                    <span itemprop="name">TCP/IP协议</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="TCP-IP五层协议"><a href="#TCP-IP五层协议" class="headerlink" title="TCP/IP五层协议"></a>TCP/IP五层协议</h2><blockquote>
+<h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><blockquote>
+<p> HTTP/HTTPS 、FTP、SSH</p>
+</blockquote>
+</blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># HTTP(Hyper Text Transfer Protocol,超文本传输协议) --&gt; 明文传输，端口80</span></span><br><span class="line">	HTTP（超文本传输协议）是一种用于分布式、 协作式和超媒体信息系 统的应用层协议。 简单来说就是一种发布和接收 HTML 页面的方法，被用于在 Web 浏览器和网站服务器之 间传递信息。HTTP 默认 工作在 TCP 协议 <span class="number">80</span> 端口，用户访问网站 http:// 打头的都是标准 HTTP 服 务。HTTP 协议以明文方式发送内容，不提供任何方式的数据加密，如果攻击 者截取了 Web浏览器和网站服 务器之间的传输报文，就，可以直接读懂其中的 信息，因此，HTTP 协议不适合传输一些敏感信息，比如： 信用卡号、密码等支 付信息</span><br><span class="line"></span><br><span class="line"><span class="comment"># (Hyper Text Transfer Protocol over SecureSocket Layer,超文本传输安全协议) --&gt; 密文传输，端口443</span></span><br><span class="line">	HTTPS（超文本传输安全协议）是一种透 过计算机网络进行安全 通信的传输协议。HTTPS 】经由 HTTP 进行通信，但 利用 SSL/TLS 来加密数据包。HTTPS 开发的主要 目的，是提供对网站服务器 的身份认证，保护交换数据的隐私与完整性。 HTTPS 默认工作在 TCP 协议 <span class="number">443</span> 端口，它的工作流程一般如以下方式：<span class="number">1</span>、TCP 三次同步握手 <span class="number">2</span>、客户端验证服 务器数字证书 <span class="number">3</span>、DH 算法协商对称加密算法的密钥、hash 算法的密钥 <span class="number">4</span>、SSL 安全加密隧道协商完成 <span class="number">5</span>、网页以加密的方式传 输，用协商的对称加密算法和密 钥加密，保证数据机密性；用协商的 hash算法进行数据完整性保护，保证 数据 不被篡改</span><br><span class="line"><span class="comment"># http 和 https 的 区别：</span></span><br><span class="line">	<span class="number">1</span>）、https 需要到ca申请证书，一般免费证书较少，因而需要一定费用</span><br><span class="line">    <span class="number">2</span>）、http属于明文传输，https具有安全性的ssl加密传输协议</span><br><span class="line">    <span class="number">3</span>）、http和https使用的是完全不同的连接方式，用的端口也不一样，前者是<span class="number">80</span>，后者是<span class="number">443</span></span><br><span class="line">    <span class="number">4</span>）、http的连接很简单，是无状态的；https协议是由SSL+HTTP构建的可进行加密传输、身份认证的网络协议，比http协议安全。</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># FTP（File Transfer Protocol，文件传输协议）</span></span><br><span class="line">	FTP协议包括两个组成部分：服务器和客户端</span><br><span class="line">    其中FTP服务器用来存储文件，用户可以使用FTP客户端通过FTP协议访问位于FTP服务器上的资源。在开发网站的时候，通常利用FTP协议把网页或程序传到Web服务器上。此外，由于FTP传输效率非常高，在网络上传输大的文件时，一般也采用该协议。</span><br><span class="line">    默认情况下FTP协议使用TCP端口中的 <span class="number">20</span>和<span class="number">21</span>这两个端口，其中<span class="number">20</span>用于传输数据，<span class="number">21</span>用于传输控制信息</span><br><span class="line">    但是，是否使用<span class="number">20</span>作为传输数据的端口与FTP使用的传输模式有关，如果采用主动模式，那么数据传输端口就是<span class="number">20</span>；如果采用被动模式，则具体最终使用哪个端口要服务器端和客户端协商决定。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SSH（远程登录协议）</span></span><br><span class="line">SSH 为 [Secure Shell] 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。SSH 是目前较可靠，专为[远程登录](https://baike.baidu.com/item/远程登录/<span class="number">1071998</span>)会话和其他网络服务提供安全性的协议。利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。SSH最初是UNIX系统上的一个程序，后来又迅速扩展到其他操作平台。SSH在正确使用时可弥补网络中的漏洞。SSH客户端适用于多种平台。几乎所有UNIX平台—包括[HP-UX]、[Linux]、[AIX]、[Solaris]、[Digital]、[UNIX]、[Irix]，以及其他平台，都可运行SSH。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><blockquote>
+<p>TCP/UDP协议</p>
+</blockquote>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># TCP 协议</span></span><br><span class="line">	tcp是一种面向连接的，可靠的，基于字节流的传输层通信协议</span><br><span class="line">    	<span class="number">1</span>）、有序性：数据包编号，判断数据包的正确次序</span><br><span class="line">        <span class="number">2</span>）、正确性：使用checksum函数检查数据包是否损坏，发送接收时都会计算校验和</span><br><span class="line">        <span class="number">3</span>）、可靠性：发送端有超时重发，并由确认机制识别错误和数据包的丢失</span><br><span class="line">        <span class="number">4</span>）、可控性：（滑动窗口协议）与（拥塞控制算法）控制数据包的发送速度</span><br><span class="line">        </span><br><span class="line"><span class="comment"># UDP 协议</span></span><br><span class="line">	dup协议是一种用户数据报协议，面向无连接的传输层协议，传输不可靠</span><br><span class="line">    	<span class="number">1</span>）、无连接，数据可能丢失损坏</span><br><span class="line">        <span class="number">2</span>）、报文小，传输速度快</span><br><span class="line">        <span class="number">3</span>）、吞吐量大的网络传输，可以在一定程度上承受数据丢包</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><blockquote>
+<p>ARP、IP、ICMP</p>
+</blockquote>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ARP协议（Address Resolution Protocol，地址解析协议）</span></span><br><span class="line">	是根据IP地址获取物理地址的一个TCP/IP协议。主机发送信息时将包含目标IP地址的ARP请求广播到局域网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># IP协议（Internet Protocol，网络互联协议）是TCP/IP协议族的核心组成部分，是目前应用最广的网络互联协议。</span></span><br><span class="line">	IP层对应于ISO/OSI七层参考模型中的网络层。通过IP数据包和IP地址屏蔽掉了不同的物理网络（如以太网、令牌环网等）的帧格式、地址格式等各种底层物理网络细节，使得各种物理网络的差异性对上层协议不复存在，从而使网络互联成为可能。IP协议的主要功能有：无连接数据报传送、数据报路由选择和差错控制。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#ICMP（Internet Control Message Protocol,Internet控制报文协议）它是TCP/IP协议簇的一个子协议.</span></span><br><span class="line">	用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><blockquote>
+<p>PDN、FDDI、SLIP</p>
+</blockquote>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># PDN 公用数据网（Public Data Network，PDN），为公众提供数据通信服务的通信网。</span></span><br><span class="line">	由交换机、网控中心、用户入网设备、通信线路等设施组成。每个入网用户可与网上其他用户通信，公用数据网负责数据在其间作透明的无差错传输。有公用数字数据网、公用分组交换数据网、公用帧中继网、公用ATM（异步传送模式）网等之分。它除了向公众提供一般的数据交换平台服务外，还提供公用电子信箱业务、公众宽带多媒体业务、公用电子数据交换业务、公众互联网业务、公用无线数据通信网及相应的业务等</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># FDDI 光纤分布式数据接口（FDDI）是由美国国家标准化组织（ANSI）制定的在光缆上发送数字信号的一组协议。</span></span><br><span class="line">	FDDI使用双环令牌，传输速率可以达到<span class="number">100</span>Mb/s。由于支持高宽带和远距离通信网络，FDDI通常用作骨干网</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SLIP 串行线路网际协议（Serial Line Internet Protocol）</span></span><br><span class="line">	是一个在串行线路上对IP分组进行封装的简单的面向字符的协议，用以使用户通过电话线和调制解调器接入Internet</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><blockquote>
+<p>以太网协议</p>
+</blockquote>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">以太网是目前使用最广泛的局域网技术。由于其简单、成本低、可扩展性强、与IP网能够很好地结合等特点，以太网技术的应用正从企业内部网络向公用电信网领域迈进。以太网接入是指将以太网技术与综合布线相结合，作为公用电信网的接入网，直接向用户提供基于IP的多种业务的传送通道。以太网技术的实质是一种二层的媒质访问控制技术，可以在五类线上传送，也可以与其它接入媒质相结合，形成多种宽带接入技术。以太网与电话铜缆上的VDSL相结合，形成EoVDSL技术；与无源光网络相结合，产生EPON技术；在无线环境中，发展为WLAN技术。</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="OSI七层协议："><a href="#OSI七层协议：" class="headerlink" title="OSI七层协议："></a>OSI七层协议：</h1><blockquote>
+<h3 id="应用层-1"><a href="#应用层-1" class="headerlink" title="应用层"></a>应用层</h3><p>与其它计算机进行通讯的一个应用，它是对应应用程序的通信服务的。例如，一个没有通信功能的字处理程序就不能执行通信的<a href="https://baike.baidu.com/item/代码" target="_blank" rel="noopener">代码</a>，从事字<a href="https://baike.baidu.com/item/处理" target="_blank" rel="noopener">处理</a>工作的程序员也不关心OSI的第7层。但是，如果添加了一个传输文件的选项，那么字<a href="https://baike.baidu.com/item/处理器" target="_blank" rel="noopener">处理器</a>的程序就需要实现OSI的第7层。示例：<a href="https://baike.baidu.com/item/TELNET/810597" target="_blank" rel="noopener">TELNET</a>，<a href="https://baike.baidu.com/item/HTTP/243074" target="_blank" rel="noopener">HTTP</a>，<a href="https://baike.baidu.com/item/FTP/13839" target="_blank" rel="noopener">FTP</a>，<a href="https://baike.baidu.com/item/NFS/812203" target="_blank" rel="noopener">NFS</a>，<a href="https://baike.baidu.com/item/SMTP/175887" target="_blank" rel="noopener">SMTP</a>等。</p>
+<h3 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h3><p>这一层的主要功能是定义数据格式及加密。例如，FTP允许你选择以二进制或ASCII格式传输。如果选择二进制，那么发送方和接收方不改变文件的内容。如果选择ASCII格式，发送方将把文本从发送方的<a href="https://baike.baidu.com/item/字符集" target="_blank" rel="noopener">字符集</a>转换成标准的ASCII后发送数据。在接收方将标准的ASCII转换成接收方计算机的字符集。示例：加密，ASCII等。</p>
+<h3 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h3><p>它定义了如何开始、控制和结束一个会话，包括对多个双向消息的控制和管理，以便在只完成连续消息的一部分时可以通知应用，从而使表示层看到的数据是连续的，在某些情况下，如果表示层收到了所有的<a href="https://baike.baidu.com/item/数据/5947370" target="_blank" rel="noopener">数据</a>，则用数据代表表示层。示例：RPC，SQL等。</p>
+<h3 id="传输层-1"><a href="#传输层-1" class="headerlink" title="传输层"></a>传输层</h3><p>这层的功能包括是否选择差错恢复协议还是无差错恢复协议，及在同一<a href="https://baike.baidu.com/item/主机" target="_blank" rel="noopener">主机</a>上对不同应用的<a href="https://baike.baidu.com/item/数据流" target="_blank" rel="noopener">数据流</a>的输入进行复用，还包括对收到的顺序不对的<a href="https://baike.baidu.com/item/数据包" target="_blank" rel="noopener">数据包</a>的重新排序功能。示例：<a href="https://baike.baidu.com/item/TCP/33012" target="_blank" rel="noopener">TCP</a>，<a href="https://baike.baidu.com/item/UDP/571511" target="_blank" rel="noopener">UDP</a>，<a href="https://baike.baidu.com/item/SPX/610336" target="_blank" rel="noopener">SPX</a>。</p>
+<h3 id="网络层-1"><a href="#网络层-1" class="headerlink" title="网络层"></a>网络层</h3><p>这层对端到端的包传输进行定义，它定义了能够标识所有结点的<a href="https://baike.baidu.com/item/逻辑地址" target="_blank" rel="noopener">逻辑地址</a>，还定义了<a href="https://baike.baidu.com/item/路由" target="_blank" rel="noopener">路由</a>实现的方式和学习的方式。为了适应<a href="https://baike.baidu.com/item/最大传输单元" target="_blank" rel="noopener">最大传输单元</a>长度小于包长度的<a href="https://baike.baidu.com/item/传输介质" target="_blank" rel="noopener">传输介质</a>，网络层还定义了如何将一个包分解成更小的包的分段方法。示例：IP，IPX等。</p>
+<h3 id="数据链路层-1"><a href="#数据链路层-1" class="headerlink" title="数据链路层"></a>数据链路层</h3><p>它定义了在单个链路上如何传输数据。这些协议与被讨论的各种介质有关。示例：<a href="https://baike.baidu.com/item/ATM/8314845" target="_blank" rel="noopener">ATM</a>，<a href="https://baike.baidu.com/item/FDDI/572177" target="_blank" rel="noopener">FDDI</a>等。</p>
+<h3 id="物理层-1"><a href="#物理层-1" class="headerlink" title="物理层"></a>物理层</h3><p>OSI的物理层规范是有关<a href="https://baike.baidu.com/item/传输介质" target="_blank" rel="noopener">传输介质</a>的特性，这些规范通常也参考了其他组织制定的标准。连接头、帧、帧的使用、电流、编码及光调制等都属于各种物理层规范中的内容。物理层常用多个规范完成对所有细节的定义。示例：<a href="https://baike.baidu.com/item/Rj45/3401007" target="_blank" rel="noopener">Rj45</a>，<a href="https://baike.baidu.com/item/802.3/960717" target="_blank" rel="noopener">802.3</a>等。</p>
+</blockquote>
+
+      <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+      </div>
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>秦梦奇
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://Angle-dream.top/2019/01/25/TCP-IP协议/" title="TCP/IP五层、OSI七层协议">http://Angle-dream.top/2019/01/25/TCP-IP协议/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/07/25/vue+django分页/" rel="next" title="django + vue 分页">
+                  <i class="fa fa-chevron-left"></i> django + vue 分页
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/01/25/django自定义中间件/" rel="prev" title="Django 自定义中间件">
+                  Django 自定义中间件 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP五层协议"><span class="nav-text">TCP/IP五层协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#应用层"><span class="nav-text">应用层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传输层"><span class="nav-text">传输层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络层"><span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据链路层"><span class="nav-text">数据链路层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理层"><span class="nav-text">物理层</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OSI七层协议："><span class="nav-text">OSI七层协议：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#应用层-1"><span class="nav-text">应用层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表示层"><span class="nav-text">表示层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#会话层"><span class="nav-text">会话层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传输层-1"><span class="nav-text">传输层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络层-1"><span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据链路层-1"><span class="nav-text">数据链路层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理层-1"><span class="nav-text">物理层</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/u=3621933753,1508221562&fm=26&gp=0.jpg"
+      alt="秦梦奇">
+  <p class="site-author-name" itemprop="name">秦梦奇</p>
+  <div class="site-description" itemprop="description">贪婪和不劳而获是人性最大的劣根</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Angle-Dream" title="GitHub &rarr; https://github.com/Angle-Dream" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.1"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

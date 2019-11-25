@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/u=3621933753,1508221562&fm=26&gp=0.jpg?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/u=3621933753,1508221562&fm=26&gp=0.jpg?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="python 创建虚拟环境 windows and linux 一、windows下Python虚拟环境的安装和配置12345678    1、使用win+R在cmd终端运行pip install virtualenv    2、继续使用安装pip install virtualenvwrapper-win 3、配置windows环境变量：新建系统变量，变量名必须为WORKON_HOME，路径可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 创建虚拟环境 windows and linux">
+<meta property="og:url" content="http://Angle-dream.top/2018/03/01/Django虚拟环境/index.html">
+<meta property="og:site_name" content="Follow Your Dreams">
+<meta property="og:description" content="python 创建虚拟环境 windows and linux 一、windows下Python虚拟环境的安装和配置12345678    1、使用win+R在cmd终端运行pip install virtualenv    2、继续使用安装pip install virtualenvwrapper-win 3、配置windows环境变量：新建系统变量，变量名必须为WORKON_HOME，路径可以">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-24T09:29:16.495Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python 创建虚拟环境 windows and linux">
+<meta name="twitter:description" content="python 创建虚拟环境 windows and linux 一、windows下Python虚拟环境的安装和配置12345678    1、使用win+R在cmd终端运行pip install virtualenv    2、继续使用安装pip install virtualenvwrapper-win 3、配置windows环境变量：新建系统变量，变量名必须为WORKON_HOME，路径可以">
+  <link rel="canonical" href="http://Angle-dream.top/2018/03/01/Django虚拟环境/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>python 创建虚拟环境 windows and linux | Follow Your Dreams</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Follow Your Dreams</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">向着梦想前进</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-photos">
+      
+    
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-photos"></i>photos</a>
+
+  </li>
+      
+    
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">
+        
+          <i class="fa fa-search fa-fw"></i>
+        
+        搜索
+        </a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://Angle-dream.top/2018/03/01/Django虚拟环境/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="秦梦奇">
+      <meta itemprop="description" content="贪婪和不劳而获是人性最大的劣根">
+      <meta itemprop="image" content="/images/u=3621933753,1508221562&fm=26&gp=0.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Follow Your Dreams">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            python 创建虚拟环境 windows and linux
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-01 21:46:12" itemprop="dateCreated datePublished" datetime="2018-03-01T21:46:12+08:00">2018-03-01</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-24 17:29:16" itemprop="dateModified" datetime="2019-10-24T17:29:16+08:00">2019-10-24</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="python-创建虚拟环境-windows-and-linux"><a href="#python-创建虚拟环境-windows-and-linux" class="headerlink" title="python 创建虚拟环境 windows and linux"></a>python 创建虚拟环境 windows and linux</h1><p> 一、windows下Python虚拟环境的安装和配置</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    <span class="number">1</span>、使用win+R在cmd终端运行pip install virtualenv</span><br><span class="line"></span><br><span class="line">    <span class="number">2</span>、继续使用安装pip install virtualenvwrapper-win</span><br><span class="line"></span><br><span class="line"> <span class="number">3</span>、配置windows环境变量：新建系统变量，变量名必须为WORKON_HOME，路径可以自行选择（本人使用路径D:\PythonVirtualenv）</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>、查看虚拟环境配置是否成功，打开cmd输入lsvirtualenv，就可以查看虚拟环境所存在的目录（这里的flask是我之前创建好的）</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5、开始创建虚拟环境：使用命令mkvirtualenv test（这个虚拟环境名称可以随意起），创建成功后直接进入虚拟环境test</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">6、打开D:<span class="symbol">\P</span>ythonVirtualenv<span class="symbol">\t</span>est就可以看到刚刚所创建的虚拟环境。当然我们可以创建多个虚拟环境，还能随意切换，哲学虚拟环境的文件都位于D:<span class="symbol">\P</span>ythonVirtualenv下面。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7</span>、使用命令workon进行切换虚拟环境。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8 、退出当前虚拟环境，直接输入命令deactivate</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">9、删除虚拟环境，直接敲命令rmvirtualenv <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span>、列出所有虚拟环境  lsvirtualenv</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">11</span>. 创建虚拟环境的时候指定 `Python` 版本：</span><br><span class="line"></span><br><span class="line">在使用 `mkvirtualenv` 的时候，可以指定 `--python` 的参数来指定具体的 `python` 路径：</span><br><span class="line"></span><br><span class="line"><span class="title"> mkvirtualenv --python==C:</span>\Python36\python.exe hy_env</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、linux创建Python虚拟环境及配置"><a href="#二、linux创建Python虚拟环境及配置" class="headerlink" title="二、linux创建Python虚拟环境及配置"></a>二、linux创建Python虚拟环境及配置</h2><p>​       <font color="red"> linux虚拟环境的安装与windows没多大区别，直接用一副清晰的流程图解析一下。</font></p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">三、Django、Flask项目中如何创建Python虚拟环境呢？</span><br><span class="line"></span><br><span class="line">   <span class="number">1</span>、对于linux来说：</span><br><span class="line"></span><br><span class="line">          （<span class="number">1</span>）、启动黑屏终端，进入到工程目录下，在下面创建文件requirements.txt</span><br><span class="line"></span><br><span class="line">          （<span class="number">2</span>）、打开文件requirements.txt，在里面写入工程所需要的环境安装语句。例如，一个Flask项目需要的一些扩展库</span><br><span class="line"></span><br><span class="line">                       flask==<span class="number">0.10</span><span class="number">.1</span></span><br><span class="line">                       flask-script</span><br><span class="line">                       flask-migrate==<span class="number">2.1</span><span class="number">.1</span></span><br><span class="line">                       pymysql</span><br><span class="line">                       flask-sqlalchemy==<span class="number">2.3</span><span class="number">.2</span></span><br><span class="line"></span><br><span class="line">                       flask-restful</span><br><span class="line"></span><br><span class="line">           （<span class="number">3</span>）、在工程目录下输入命令virtualenv <span class="keyword">env</span>即可在工程下创建<span class="keyword">env</span>的文件夹。</span><br><span class="line"></span><br><span class="line">          （<span class="number">4</span>）、若以后拿到这个工程且本机也没有相关的Python环境及相关扩展库，就可以进入工程自带的虚拟环境。输入<span class="keyword">source</span> <span class="keyword">env</span>/bin/activate</span><br><span class="line"></span><br><span class="line">      （<span class="number">5</span>）、安装所需要的模块（开发时已经安装好了）， 在当前<span class="keyword">env</span>环境下输入命令：pip    install    -r     requirements.txt , 这样你就可以开心的浏览这个工程了。</span><br><span class="line"></span><br><span class="line">   <span class="number">2</span>、对于windows来说：</span><br><span class="line"></span><br><span class="line">           （<span class="number">1</span>）、前三步骤和linux相同，照搬就行</span><br><span class="line"></span><br><span class="line">           （<span class="number">2</span>）、切入工程目录下的虚拟环境<span class="keyword">env</span>下面的script目录（E:\project\<span class="keyword">env</span>\Scripts），输入activate，即可进入到虚拟环境。</span><br><span class="line"></span><br><span class="line">           （<span class="number">3</span>）、在虚拟环境中切换到工程目录下，输入命令：pip  install  -r  requirements.txt，即可安装所需的环境及扩展库。</span><br><span class="line"></span><br><span class="line">           （<span class="number">4</span>）、好了，万事俱备，只欠东风喽，你就开开❤❤的享受这个工程了。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[​直接创建] </span><br><span class="line"></span><br><span class="line">创建一个虚拟环境，终端界面输入   py -m venv 环境名</span><br><span class="line"></span><br><span class="line">激活虚拟环境，输入  .<span class="symbol">\环</span>境名<span class="symbol">\S</span>cripts<span class="symbol">\a</span>ctivate  , 然后回车确认。</span><br><span class="line"></span><br><span class="line">退出虚拟化环境，类似进入虚拟化环境，输入     .<span class="symbol">\环</span>境名<span class="symbol">\S</span>cripts<span class="symbol">\d</span>eactivate.bat  ，我们将会退出回到最初的路径状态。</span><br></pre></td></tr></table></figure>
+
+
+      <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+      </div>
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>秦梦奇
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://Angle-dream.top/2018/03/01/Django虚拟环境/" title="python 创建虚拟环境 windows and linux">http://Angle-dream.top/2018/03/01/Django虚拟环境/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2017/08/25/正则匹配/" rel="next" title="正则匹配">
+                  <i class="fa fa-chevron-left"></i> 正则匹配
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/04/20/VUE的创建及运行/" rel="prev" title="VUE的运行">
+                  VUE的运行 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python-创建虚拟环境-windows-and-linux"><span class="nav-text">python 创建虚拟环境 windows and linux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二、linux创建Python虚拟环境及配置"><span class="nav-text">二、linux创建Python虚拟环境及配置</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/u=3621933753,1508221562&fm=26&gp=0.jpg"
+      alt="秦梦奇">
+  <p class="site-author-name" itemprop="name">秦梦奇</p>
+  <div class="site-description" itemprop="description">贪婪和不劳而获是人性最大的劣根</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Angle-Dream" title="GitHub &rarr; https://github.com/Angle-Dream" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.1"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

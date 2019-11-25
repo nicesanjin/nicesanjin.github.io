@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/u=3621933753,1508221562&fm=26&gp=0.jpg?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/u=3621933753,1508221562&fm=26&gp=0.jpg?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="1. 建一个 serializer.py 文件2. 在 settings.py 中注册 rest_framework 第一步，在 settings.py 中进行1234567891011121314INSTALLED_APPS = [    &apos;django.contrib.admin&apos;,    &apos;django.contrib.auth&apos;,    &apos;django.contrib.contenttyp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django 序列化器">
+<meta property="og:url" content="http://Angle-dream.top/2018/06/25/django序列化器/index.html">
+<meta property="og:site_name" content="Follow Your Dreams">
+<meta property="og:description" content="1. 建一个 serializer.py 文件2. 在 settings.py 中注册 rest_framework 第一步，在 settings.py 中进行1234567891011121314INSTALLED_APPS = [    &apos;django.contrib.admin&apos;,    &apos;django.contrib.auth&apos;,    &apos;django.contrib.contenttyp">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-15T07:23:43.079Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django 序列化器">
+<meta name="twitter:description" content="1. 建一个 serializer.py 文件2. 在 settings.py 中注册 rest_framework 第一步，在 settings.py 中进行1234567891011121314INSTALLED_APPS = [    &apos;django.contrib.admin&apos;,    &apos;django.contrib.auth&apos;,    &apos;django.contrib.contenttyp">
+  <link rel="canonical" href="http://Angle-dream.top/2018/06/25/django序列化器/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Django 序列化器 | Follow Your Dreams</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Follow Your Dreams</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">向着梦想前进</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-photos">
+      
+    
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-photos"></i>photos</a>
+
+  </li>
+      
+    
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">
+        
+          <i class="fa fa-search fa-fw"></i>
+        
+        搜索
+        </a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://Angle-dream.top/2018/06/25/django序列化器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="秦梦奇">
+      <meta itemprop="description" content="贪婪和不劳而获是人性最大的劣根">
+      <meta itemprop="image" content="/images/u=3621933753,1508221562&fm=26&gp=0.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Follow Your Dreams">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            Django 序列化器
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-25 10:18:27" itemprop="dateCreated datePublished" datetime="2018-06-25T10:18:27+08:00">2018-06-25</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-15 15:23:43" itemprop="dateModified" datetime="2019-10-15T15:23:43+08:00">2019-10-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django/" itemprop="url" rel="index">
+                    <span itemprop="name">Django</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="1-建一个-serializer-py-文件"><a href="#1-建一个-serializer-py-文件" class="headerlink" title="1. 建一个 serializer.py 文件"></a>1. 建一个 serializer.py 文件</h3><h3 id="2-在-settings-py-中注册-rest-framework"><a href="#2-在-settings-py-中注册-rest-framework" class="headerlink" title="2. 在 settings.py 中注册 rest_framework"></a>2. 在 settings.py 中注册 rest_framework</h3><blockquote>
+<h5 id="第一步，在-settings-py-中进行"><a href="#第一步，在-settings-py-中进行" class="headerlink" title="第一步，在 settings.py 中进行"></a>第一步，在 settings.py 中进行</h5></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">'django.contrib.admin'</span>,</span><br><span class="line">    <span class="string">'django.contrib.auth'</span>,</span><br><span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span><br><span class="line">    <span class="string">'django.contrib.sessions'</span>,</span><br><span class="line">    <span class="string">'django.contrib.messages'</span>,</span><br><span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span><br><span class="line">    <span class="comment"># 第三方库</span></span><br><span class="line">    <span class="string">'rest_framework'</span>,</span><br><span class="line">    <span class="string">'corsheaders'</span>,</span><br><span class="line">    <span class="comment"># 自建 app</span></span><br><span class="line">    <span class="string">'myapp'</span>,</span><br><span class="line">    <span class="string">'goods'</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+
+<blockquote>
+<h5 id="第二步，在-serializer-py-中进行"><a href="#第二步，在-serializer-py-中进行" class="headerlink" title="第二步，在 serializer.py 中进行"></a>第二步，在 serializer.py 中进行</h5></blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</span><br><span class="line"><span class="keyword">from</span> goods.models <span class="keyword">import</span> Goods,GoodsCart  <span class="comment"># 从子文件导入商品表和商品分类表   </span></span><br><span class="line"><span class="keyword">from</span> myapp.models <span class="keyword">import</span> User  <span class="comment"># 从子文件导入用户表</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GoodsCartsSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = Goods</span><br><span class="line">        fields = <span class="string">'__all__'</span> <span class="comment"># 导入所有字段</span></span><br><span class="line">--------------------------------------------------------------------------------------</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GoodsCartsSerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = Goods</span><br><span class="line">        fields = [<span class="string">'id'</span>, <span class="string">'price'</span>, <span class="string">'name'</span>, <span class="string">'img'</span>]  <span class="comment"># 导入自己所需字段</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h5 id="第三步，在-views-py-中进行"><a href="#第三步，在-views-py-中进行" class="headerlink" title="第三步，在 views.py 中进行"></a>第三步，在 views.py 中进行</h5></blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> userapi <span class="keyword">import</span> serializer  <span class="comment"># 从子文件中导入serializer.py文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># view 视图 写法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GetCart</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self,request)</span>:</span></span><br><span class="line">        id_ = request.data[<span class="string">'id'</span>]</span><br><span class="line">        user = models.User.objects.get(pk=id_)</span><br><span class="line">        carts = goods.models.GoodsCart.objects.filter(user__id=id_)  <span class="comment">#此为 queryset 结果集</span></span><br><span class="line">        <span class="comment"># instance ：要序列化的东西 ， queryset 结果集</span></span><br><span class="line">        <span class="comment"># many : 如果序列化的是N条，是一个 QuerySet , 则 many 为 True,否则为 False</span></span><br><span class="line">        carts_data = serializer.CartSerializer(instance=carts,many=<span class="literal">True</span>) <span class="comment"># （instance为序列化形参）</span></span><br><span class="line">        <span class="keyword">return</span> Response(&#123;</span><br><span class="line">            <span class="string">'code'</span>:<span class="number">1</span>,</span><br><span class="line">            <span class="string">'data'</span>:carts_data.data</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>对于同一个表的序列化和反序列化（serializer.py）</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CitySerializer</span><span class="params">(serializers.ModelSerializer)</span>:</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span>   <span class="comment"># 序列化（后台数据传入前台）</span></span><br><span class="line">        model = City</span><br><span class="line">        fields = <span class="string">'__all__'</span> </span><br><span class="line">									<span class="comment"># *+实参用于解包列表</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self,value)</span>:</span>  <span class="comment"># 反序列化  **+实参=&gt;用于解包字典（前台数据传入后台）</span></span><br><span class="line">        c = City.objects.create(</span><br><span class="line">            **value</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> c</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>后台视图 （views.py）</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView  <span class="comment"># APIView继承了view,但会对其中的方法进行一次封装</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response  <span class="comment"># Response 将数据封装成 json 格式</span></span><br><span class="line"><span class="keyword">from</span> django.core.paginator <span class="keyword">import</span> Paginator  <span class="comment"># 分页导包</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> *   <span class="comment"># 导入自建的表</span></span><br><span class="line"><span class="keyword">from</span> .serializer <span class="keyword">import</span> *  <span class="comment"># 导入序列化器</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Add</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self,request)</span>:</span></span><br><span class="line">        data = request.data  <span class="comment"># 获取前台数据</span></span><br><span class="line">        city = CitySerializer(data=data)  <span class="comment"># 将数据反序列化（第一个data为反序列化形参）</span></span><br><span class="line">        <span class="keyword">if</span> city.is_valid():  <span class="comment"># 判断数据是否合法</span></span><br><span class="line">            city.save()  <span class="comment"># 提交数据库</span></span><br><span class="line">            <span class="keyword">return</span> Response(&#123;</span><br><span class="line">                <span class="string">'code'</span>:<span class="number">200</span>,</span><br><span class="line">                <span class="string">'message'</span>:<span class="string">'添加成功'</span></span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>VUE</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        添加城市：&lt;input type=&quot;text&quot; v-model=&quot;name&quot;&gt;  //双向绑定</span><br><span class="line">        &lt;button @click=&quot;add&quot;&gt;添加&lt;/button&gt;  // 绑定点击事件</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import axios from &apos;axios&apos;  // 导入axios</span><br><span class="line">    export default &#123;</span><br><span class="line">        data() &#123;</span><br><span class="line">            return &#123;</span><br><span class="line">                name: &apos;&apos; // 定义变量</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            add() &#123;</span><br><span class="line">                let form_data = new FormData  // 前台传后台</span><br><span class="line">                form_data.append(&apos;name&apos;,this.name)</span><br><span class="line">                axios(&#123;</span><br><span class="line">                    url: &apos;http://127.0.0.1:8000/myapp/add/&apos;,</span><br><span class="line">                    method: &apos;post&apos;,</span><br><span class="line">                    data: form_data,</span><br><span class="line">                &#125;).then(res=&gt;&#123;</span><br><span class="line">                    if(res.data.code==200)&#123;</span><br><span class="line">                        alert(&apos;添加成功&apos;)</span><br><span class="line">                        this.name = &apos;&apos;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+
+      <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+      </div>
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>秦梦奇
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://Angle-dream.top/2018/06/25/django序列化器/" title="Django 序列化器">http://Angle-dream.top/2018/06/25/django序列化器/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/06/25/json/" rel="next" title="json格式 转码和编码">
+                  <i class="fa fa-chevron-left"></i> json格式 转码和编码
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/07/25/vue+django分页/" rel="prev" title="django + vue 分页">
+                  django + vue 分页 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-建一个-serializer-py-文件"><span class="nav-text">1. 建一个 serializer.py 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-在-settings-py-中注册-rest-framework"><span class="nav-text">2. 在 settings.py 中注册 rest_framework</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#第一步，在-settings-py-中进行"><span class="nav-text">第一步，在 settings.py 中进行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#第二步，在-serializer-py-中进行"><span class="nav-text">第二步，在 serializer.py 中进行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#第三步，在-views-py-中进行"><span class="nav-text">第三步，在 views.py 中进行</span></a></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/u=3621933753,1508221562&fm=26&gp=0.jpg"
+      alt="秦梦奇">
+  <p class="site-author-name" itemprop="name">秦梦奇</p>
+  <div class="site-description" itemprop="description">贪婪和不劳而获是人性最大的劣根</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Angle-Dream" title="GitHub &rarr; https://github.com/Angle-Dream" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.1"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

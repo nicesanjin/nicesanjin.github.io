@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/u=3621933753,1508221562&fm=26&gp=0.jpg?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/u=3621933753,1508221562&fm=26&gp=0.jpg?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="勒索病毒防护一些预防措施其实从上文中的勒索病毒介绍中就可以看出，比如勒索病毒一般需要连接到黑客的C&amp;amp;C服务器来进行本地信息的上传和加密，因此可以采用诸如入口、出口白名单的方式对出入我们计算机的流量进行限制，这样可以极大地降低我们的计算机被植入勒索病毒的风险。上面只是简单说明了下勒索病毒预防的常见的方法，接下来我们从云环境和非云环境两个层面并结合安全技术和安全管理两个层面看下一些常用的勒索病">
+<meta property="og:type" content="article">
+<meta property="og:title" content="勒索病毒">
+<meta property="og:url" content="http://Angle-dream.top/2019/08/25/勒索病毒防护/index.html">
+<meta property="og:site_name" content="Follow Your Dreams">
+<meta property="og:description" content="勒索病毒防护一些预防措施其实从上文中的勒索病毒介绍中就可以看出，比如勒索病毒一般需要连接到黑客的C&amp;amp;C服务器来进行本地信息的上传和加密，因此可以采用诸如入口、出口白名单的方式对出入我们计算机的流量进行限制，这样可以极大地降低我们的计算机被植入勒索病毒的风险。上面只是简单说明了下勒索病毒预防的常见的方法，接下来我们从云环境和非云环境两个层面并结合安全技术和安全管理两个层面看下一些常用的勒索病">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-14T05:12:41.095Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="勒索病毒">
+<meta name="twitter:description" content="勒索病毒防护一些预防措施其实从上文中的勒索病毒介绍中就可以看出，比如勒索病毒一般需要连接到黑客的C&amp;amp;C服务器来进行本地信息的上传和加密，因此可以采用诸如入口、出口白名单的方式对出入我们计算机的流量进行限制，这样可以极大地降低我们的计算机被植入勒索病毒的风险。上面只是简单说明了下勒索病毒预防的常见的方法，接下来我们从云环境和非云环境两个层面并结合安全技术和安全管理两个层面看下一些常用的勒索病">
+  <link rel="canonical" href="http://Angle-dream.top/2019/08/25/勒索病毒防护/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>勒索病毒 | Follow Your Dreams</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Follow Your Dreams</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">向着梦想前进</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-photos">
+      
+    
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-photos"></i>photos</a>
+
+  </li>
+      
+    
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">
+        
+          <i class="fa fa-search fa-fw"></i>
+        
+        搜索
+        </a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://Angle-dream.top/2019/08/25/勒索病毒防护/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="秦梦奇">
+      <meta itemprop="description" content="贪婪和不劳而获是人性最大的劣根">
+      <meta itemprop="image" content="/images/u=3621933753,1508221562&fm=26&gp=0.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Follow Your Dreams">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            勒索病毒
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-25 10:15:29" itemprop="dateCreated datePublished" datetime="2019-08-25T10:15:29+08:00">2019-08-25</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-14 13:12:41" itemprop="dateModified" datetime="2019-10-14T13:12:41+08:00">2019-10-14</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/安全/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="勒索病毒防护"><a href="#勒索病毒防护" class="headerlink" title="勒索病毒防护"></a><strong>勒索病毒防护</strong></h3><p>一些预防措施其实从上文中的勒索病毒介绍中就可以看出，比如勒索病毒一般需要连接到黑客的C&amp;C服务器来进行本地信息的上传和加密，因此可以采用诸如入口、出口白名单的方式对出入我们计算机的流量进行限制，这样可以极大地降低我们的计算机被植入勒索病毒的风险。</p><p>上面只是简单说明了下勒索病毒预防的常见的方法，接下来我们从云环境和非云环境两个层面并结合安全技术和安全管理两个层面看下一些常用的勒索病毒预防措施。</p><a id="more"></a>
+
+<p><strong>1、非云环境预防</strong></p>
+<p><strong>（1）重要数据定期备份</strong></p>
+<p>对数据库数据库等关键数据进行定期的备份，最好是进行远程异地的备份，这样即使机器上的数据被加密，也可通过远端备份的数据进行数据恢复。</p>
+<p><strong>（2）入口白名单</strong></p>
+<p>对入口方向添加白名单过滤，只开放实际在使用的端口，不在使用的端口一律不开放，比如445端口。</p>
+<p><strong>（3）出口白名单</strong></p>
+<p>服务器出口方向只开放真正需要访问的外部端口，这样可以防止勒索病毒连接远端服务器下载密钥信息。</p>
+<p>除了端口一般也建议对允许访问外网的服务器的IP进行白名单的限制。</p>
+<p><strong>（4）软件下载安全</strong></p>
+<p>软件尽量从正规的官网或者公司内部的软件中心下载，防止下载的软件带入勒索病毒。</p>
+<p>软件下载之后建议使用公司的病毒查杀工具进行检查，校验无误后再进行后续的安装使用。</p>
+<p><strong>（5）杀毒软件定期升级</strong></p>
+<p>如果环境中安装了病毒查杀软件，一定要对杀毒软件进行定期的更新升级，由于杀毒软件厂商会根据已查找到的新的病毒信息对自己的病毒特征库进行更新，因此定期更新杀毒软件可以保持病毒特征库是最新的，可以有效减少勒索病毒来源的种类。</p>
+<p><strong>（6）非弱口令</strong></p>
+<p>勒索病毒不单单会利用系统漏洞或者挂马的方式进行进入受害者的计算机，还可能会破解用户计算机的登录账号信息来直接控制用户的计算机，然后植入勒索病毒。</p>
+<p>鉴于这种情况，一般建议增加登录密码的复杂度，包括超级管理员账号和一般的普通账号，一般建议密码长度最少为8，其中需要包含大小写字母、数字和特殊符号。</p>
+<p>除了增加密码的复杂度之外，还可以使用密钥认证的方式进行登录的鉴权，只需要将需要登录到服务器的人员的公钥信息加到目标服务器的目标用户的密钥配置文件中即可，密钥的安全程度总体上要比密码的安全程度高，建议使用密钥认证代替密码认证。</p>
+<p><strong>（7）系统漏洞补丁</strong></p>
+<p>实际使用中，服务器的操作系统版本一般不会进行频繁的变更，但这并不代表操作系统的问题就可以忽视。</p>
+<p>系统可以不频繁升级，但可以通过打补丁的方式减少现有系统的漏洞，但一般建议经常关注现有系统的漏洞预警信息，及时对漏洞进行修复。</p>
+<p><strong>2、云环境预防</strong></p>
+<p><strong>（1）重要数据定期备份</strong></p>
+<p>由于云厂商一般会提供较多的数据备份措施，因此相比非云环境，云环境的数据备份相对简单些。</p>
+<p>不论是保存在云硬盘还是各类PASS服务自己的数据都有完善的数据备份机制，一般建议设置自动定时备份，全量备份、增量备份都可以，如果是增量备份的话可以将备份的频率设置的相对大一些，这样在使用备份的数据进行数据恢复的时候，恢复后的数据相对较新。</p>
+<p><strong>（2）配置VPC安全组</strong></p>
+<p>VPC就是用户自己的私有网络，用户服务器的流量的出入都需要经过VPC 安全组的过滤，因此合理的安全组规则可以有效的降低服务器被植入勒索病毒的风险。</p>
+<p>VPC 安全组一般都会分出、入两个方向进行设置，出入的端口号一般建议逐个审核、登记，出入的服务器的IP段建议在满足业务需要的情况下尽量的减小网段的范围。</p>
+<p><strong>（3）关注厂商发布的病毒提醒</strong></p>
+<p>对于当前服务器面临的安全风险，云厂商一般都会在第一时间进行潜在风险和修复方式的公布，建议经常关注云厂商发布的网站公告。对于需要用户自己进行修复的情况，及时按照厂商提供的方案进行修复。</p>
+<p><strong>（4）镜像定期备份</strong></p>
+<p>不仅仅是云盘中的数据需要周期性的备份，系统盘中的数据一般也建议进行周期性的备份。</p>
+<p>从实际的使用情况来看，很多用户在使用服务器时有时也会将一部分的数据放置到系统盘中，因此对系统盘的数据进行周期性的备份或者打快照都是很有必要的。</p>
+
+      <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+      </div>
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>秦梦奇
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://Angle-dream.top/2019/08/25/勒索病毒防护/" title="勒索病毒">http://Angle-dream.top/2019/08/25/勒索病毒防护/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/06/25/Django 中 session 和 cookie 的存、取、删除/" rel="next" title="Django 中 session 和 cookie 的存、取、删除">
+                  <i class="fa fa-chevron-left"></i> Django 中 session 和 cookie 的存、取、删除
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#勒索病毒防护"><span class="nav-text">勒索病毒防护</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/u=3621933753,1508221562&fm=26&gp=0.jpg"
+      alt="秦梦奇">
+  <p class="site-author-name" itemprop="name">秦梦奇</p>
+  <div class="site-description" itemprop="description">贪婪和不劳而获是人性最大的劣根</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Angle-Dream" title="GitHub &rarr; https://github.com/Angle-Dream" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.1"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
